@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Contact Messages — Tourify Admin</title>
+
+  <!-- Google Fonts matching Tourify Site -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../CLIENT SIDE/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../CLIENT SIDE/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Admin Custom CSS -->
+  <link href="assets/css/admin.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-logo">
+          <i class="bi bi-compass-fill" style="color: var(--accent-color); font-size: 1.5rem;"></i>
+          <span class="sitename">Tourify</span>
+        </a>
+        <span class="brand-badge">Admin</span>
+      </div>
+
+      <div class="sidebar-content">
+        <div class="nav-section-title">Core Management</div>
+        <ul class="admin-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i class="bi bi-speedometer2"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="tours.html" class="nav-link">
+              <i class="bi bi-map"></i>
+              <span>Manage Tours</span>
+            </a>
+          </li>
+          <li>
+            <a href="destinations.html" class="nav-link">
+              <i class="bi bi-geo-alt"></i>
+              <span>Destinations</span>
+            </a>
+          </li>
+          <li>
+            <a href="bookings.html" class="nav-link">
+              <i class="bi bi-ticket-perforated"></i>
+              <span>Bookings</span>
+              <span id="sidebarBookingBadge" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="users.html" class="nav-link">
+              <i class="bi bi-people"></i>
+              <span>Manage Users</span>
+            </a>
+          </li>
+          <li>
+            <a href="messages.html" class="nav-link active">
+              <i class="bi bi-chat-left-dots"></i>
+              <span>Messages</span>
+              <span id="sidebarMessageBadge" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title mt-3">Shortcuts & Tools</div>
+        <ul class="admin-nav">
+          <li>
+            <a href="#" class="nav-link btn-reset-demo-data">
+              <i class="bi bi-arrow-counterclockwise text-warning"></i>
+              <span>Reset Demo Data</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link btn-admin-logout text-danger">
+              <i class="bi bi-box-arrow-right text-danger"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../CLIENT SIDE/contact.html" target="_blank" class="live-site-btn">
+          <i class="bi bi-box-arrow-up-right"></i>
+          <span>View Public Contact Page</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="admin-main">
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="sidebar-toggle-btn d-lg-none" aria-label="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="page-breadcrumb">
+            <h1 class="page-title">Contact Inquiries</h1>
+            <p class="breadcrumb-sub">Inquiries, questions, and messages submitted from the website</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="dropdown">
+            <div class="admin-profile-pill" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="admin-avatar" id="topbarAdminAvatar">AD</div>
+              <div class="admin-info-text d-none d-sm-block">
+                <span class="admin-name" id="topbarAdminName">Administrator</span>
+                <span class="admin-role" id="topbarAdminRole">Super Admin</span>
+              </div>
+              <i class="bi bi-chevron-down text-muted small ms-1"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+              <li><a class="dropdown-item py-2" href="../CLIENT SIDE/index.html" target="_blank"><i class="bi bi-globe me-2 text-primary"></i> Live Client Site</a></li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item py-2 text-danger btn-admin-logout" href="#"><i class="bi bi-box-arrow-right me-2"></i> Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <!-- Admin Body Content -->
+      <main class="admin-body">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h5 class="admin-card-title">
+              <i class="bi bi-envelope-open-fill text-info"></i> Inquiries Inbox (<span id="messagesCountHeader">0</span>)
+            </h5>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-secondary btn-sm" id="btnMarkAllRead">
+                <i class="bi bi-check-all me-1"></i> Mark All as Read
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-card-body">
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+              <div class="filter-search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="messageSearchInput" class="form-control" placeholder="Search inquiries by sender, subject or email...">
+              </div>
+
+              <div class="d-flex align-items-center gap-2">
+                <select id="messageStatusFilter" class="form-select form-select-sm" style="width: auto; min-width: 140px;">
+                  <option value="">All Inquiries</option>
+                  <option value="unread">Unread Only</option>
+                  <option value="read">Read Only</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Messages Table -->
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Sender Name</th>
+                    <th>Email Address</th>
+                    <th>Subject</th>
+                    <th>Date Received</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="messagesTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="messagesEmptyState" class="empty-state d-none">
+              <i class="bi bi-envelope-check"></i>
+              <h5>No Messages Found</h5>
+              <p>Your inbox is clear! No messages match the current filter.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Message Detail Modal -->
+  <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-labelledby="messageModalSubject" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header">
+          <div>
+            <span class="badge bg-light text-dark border mb-1" id="messageModalDate">2026-09-28</span>
+            <h5 class="modal-title fw-bold" id="messageModalSubject">Message Subject</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="p-3 bg-light rounded-3 mb-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <strong class="d-block text-dark" id="messageModalSender">Sender Name</strong>
+                <a href="#" class="small text-primary text-decoration-none" id="messageModalEmail">sender@example.com</a>
+              </div>
+              <span class="badge bg-success-subtle text-success border border-success-subtle" id="messageModalStatusBadge">Read</span>
+            </div>
+          </div>
+
+          <label class="form-label small fw-semibold text-secondary">Inquiry Content:</label>
+          <div class="p-3 border rounded bg-white" style="min-height: 120px; font-size: 0.92rem; line-height: 1.6; white-space: pre-wrap;" id="messageModalBody">
+            Message text goes here...
+          </div>
+        </div>
+        <div class="modal-footer bg-light justify-content-between">
+          <button type="button" class="btn btn-outline-danger btn-sm" id="btnModalDeleteMessage">
+            <i class="bi bi-trash3 me-1"></i> Delete
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../CLIENT SIDE/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/admin.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalEl = document.getElementById('messageDetailModal');
+      const msgBsModal = new bootstrap.Modal(modalEl);
+      const tbody = document.getElementById('messagesTableBody');
+      const emptyState = document.getElementById('messagesEmptyState');
+      const countHeader = document.getElementById('messagesCountHeader');
+      const searchInput = document.getElementById('messageSearchInput');
+      const statusFilter = document.getElementById('messageStatusFilter');
+
+      let currentActiveMsgId = null;
+
+      // Render Messages Table
+      function renderMessages() {
+        const query = searchInput.value.trim().toLowerCase();
+        const selectedFilter = statusFilter.value;
+
+        let list = window.Store.getMessages();
+
+        if (query) {
+          list = list.filter(m =>
+            (m.name && m.name.toLowerCase().includes(query)) ||
+            (m.email && m.email.toLowerCase().includes(query)) ||
+            (m.subject && m.subject.toLowerCase().includes(query)) ||
+            (m.message && m.message.toLowerCase().includes(query))
+          );
+        }
+
+        if (selectedFilter === 'unread') {
+          list = list.filter(m => !m.isRead);
+        } else if (selectedFilter === 'read') {
+          list = list.filter(m => m.isRead);
+        }
+
+        countHeader.textContent = list.length;
+
+        if (list.length === 0) {
+          tbody.innerHTML = '';
+          emptyState.classList.remove('d-none');
+          return;
+        }
+
+        emptyState.classList.add('d-none');
+        tbody.innerHTML = list.map(m => {
+          const isRead = Boolean(m.isRead);
+          const statusText = isRead ? 'Read' : 'Unread';
+          const statusClass = isRead ? 'read' : 'unread';
+          const rowWeight = isRead ? '' : 'fw-bold';
+
+          return `
+            <tr class="${isRead ? '' : 'table-light'}">
+              <td>
+                <span class="status-badge ${statusClass}">${statusText}</span>
+              </td>
+              <td class="${rowWeight} text-dark">${m.name}</td>
+              <td class="small text-secondary">${m.email}</td>
+              <td>
+                <div class="text-truncate ${rowWeight} text-dark" style="max-width: 280px;">${m.subject}</div>
+                <div class="small text-muted text-truncate" style="max-width: 280px;">${m.message}</div>
+              </td>
+              <td class="small text-muted">${m.date || '-'}</td>
+              <td class="text-end">
+                <div class="action-btn-group">
+                  <button type="button" class="btn-action btn-action-view btn-view-msg" data-id="${m.id}" title="Read Inquiry">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button type="button" class="btn-action btn-action-edit btn-toggle-read" data-id="${m.id}" data-read="${isRead}" title="${isRead ? 'Mark as Unread' : 'Mark as Read'}">
+                    <i class="bi ${isRead ? 'bi-envelope' : 'bi-envelope-check'}"></i>
+                  </button>
+                  <button type="button" class="btn-action btn-action-delete btn-delete-msg" data-id="${m.id}" data-name="${m.name}" title="Delete Message">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach action handlers
+        document.querySelectorAll('.btn-view-msg').forEach(b => {
+          b.addEventListener('click', function () {
+            openMessageModal(this.getAttribute('data-id'));
+          });
+        });
+
+        document.querySelectorAll('.btn-toggle-read').forEach(b => {
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const isRead = this.getAttribute('data-read') === 'true';
+            window.Store.markMessageRead(id, !isRead);
+            renderMessages();
+            window.updateSidebarBadges();
+          });
+        });
+
+        document.querySelectorAll('.btn-delete-msg').forEach(b => {
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            window.confirmAction(
+              'Delete Inquiry?',
+              `Are you sure you want to delete message from "${name}"?`,
+              function () {
+                window.Store.deleteMessage(id);
+                window.showToast('Message deleted.', 'danger');
+                renderMessages();
+                window.updateSidebarBadges();
+              }
+            );
+          });
+        });
+      }
+
+      // Open Message Modal and mark read
+      function openMessageModal(id) {
+        const msg = window.Store.getMessage(id);
+        if (!msg) return;
+
+        currentActiveMsgId = msg.id;
+
+        // Auto mark as read
+        if (!msg.isRead) {
+          window.Store.markMessageRead(msg.id, true);
+          window.updateSidebarBadges();
+        }
+
+        document.getElementById('messageModalDate').textContent = msg.date || '';
+        document.getElementById('messageModalSubject').textContent = msg.subject || 'No Subject';
+        document.getElementById('messageModalSender').textContent = msg.name || 'Anonymous';
+        const emailLink = document.getElementById('messageModalEmail');
+        emailLink.textContent = msg.email || '';
+        emailLink.href = 'mailto:' + (msg.email || '');
+        document.getElementById('messageModalBody').textContent = msg.message || '';
+
+        msgBsModal.show();
+        renderMessages();
+      }
+
+      // Delete from inside modal
+      document.getElementById('btnModalDeleteMessage').addEventListener('click', function () {
+        if (!currentActiveMsgId) return;
+        msgBsModal.hide();
+        window.confirmAction(
+          'Delete Message?',
+          'Are you sure you want to permanently delete this inquiry?',
+          function () {
+            window.Store.deleteMessage(currentActiveMsgId);
+            window.showToast('Message deleted successfully.', 'danger');
+            renderMessages();
+            window.updateSidebarBadges();
+          }
+        );
+      });
+
+      // Mark all as read button
+      document.getElementById('btnMarkAllRead').addEventListener('click', function () {
+        const list = window.Store.getMessages();
+        list.forEach(m => window.Store.markMessageRead(m.id, true));
+        window.showToast('All inquiries marked as read!', 'info');
+        renderMessages();
+        window.updateSidebarBadges();
+      });
+
+      // Filter listeners
+      searchInput.addEventListener('input', renderMessages);
+      statusFilter.addEventListener('change', renderMessages);
+
+      // Initial render
+      renderMessages();
+    });
+  </script>
+</body>
+</html>

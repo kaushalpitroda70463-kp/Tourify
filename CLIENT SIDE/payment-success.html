@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Payment Successful — Tourify</title>
+  <meta name="description" content="Payment Success Confirmation for Tourify.">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    .success-card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+      max-width: 580px;
+      margin: 0 auto;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .success-header-banner {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #ffffff;
+      padding: 3rem 2rem 2.5rem;
+    }
+
+    .success-icon-badge {
+      width: 78px;
+      height: 78px;
+      background: #ffffff;
+      color: #059669;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .receipt-details-list {
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      padding: 1.2rem 1.5rem;
+      margin: 1.8rem 0;
+      text-align: left;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 0.9rem;
+    }
+
+    .receipt-row:last-child {
+      border-bottom: none;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="booking-page">
+
+  <!-- Header -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">Tourify</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="tours.html">Tours</a></li>
+          <li><a href="booking.html">Booking</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" style="padding-top: 130px; padding-bottom: 90px;">
+    <div class="container" data-aos="fade-up">
+
+      <div class="success-card">
+        <!-- Top Green Banner -->
+        <div class="success-header-banner">
+          <div class="success-icon-badge">
+            <i class="bi bi-check-lg"></i>
+          </div>
+          <h2 class="fw-bold text-white mb-1">Demo Payment Complete</h2>
+          <p class="text-white opacity-90 mb-0 small">This simulated payment was accepted. No real charge was made.</p>
+        </div>
+
+        <!-- Body Summary -->
+        <div class="p-4 p-md-5">
+          <div class="text-muted small">A confirmation voucher has been generated for your records.</div>
+
+          <div class="receipt-details-list">
+            <div class="receipt-row">
+              <span class="text-muted">Booking Reference:</span>
+              <strong class="font-monospace text-primary" id="successBookingCode">-</strong>
+            </div>
+            <div class="receipt-row">
+              <span class="text-muted">Tour Package:</span>
+              <strong class="text-dark" id="successTourTitle">-</strong>
+            </div>
+            <div class="receipt-row">
+              <span class="text-muted">Amount Paid:</span>
+              <strong class="text-dark" id="successAmount">₹0</strong>
+            </div>
+            <div class="receipt-row">
+              <span class="text-muted">Payment Status:</span>
+              <span class="badge bg-success-subtle text-success border border-success-subtle">Paid (Demo)</span>
+            </div>
+            <div class="receipt-row">
+              <span class="text-muted">Booking Status:</span>
+              <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Confirmed</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="d-grid gap-2">
+            <a href="account.html" class="btn btn-primary py-3 fw-semibold shadow-sm d-flex align-items-center justify-content-center gap-2">
+              <i class="bi bi-person-circle"></i> View My Bookings
+            </a>
+            <a href="index.html" class="btn btn-outline-secondary py-2">
+              <i class="bi bi-house me-1"></i> Return to Home
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer position-relative dark-background py-4">
+    <div class="container text-center">
+      <p class="mb-0">© <span>Copyright</span> <strong class="sitename">Tourify</strong>. College Web Technology Project.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/payment-success.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+
+</html>

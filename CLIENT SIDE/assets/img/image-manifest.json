@@ -1,0 +1,115 @@
+{
+  "version": 3,
+  "assetRoot": "assets/img/",
+  "sourceNote": "Local assets organized from the audited IMAGE_INCOMING set. Original incoming downloads remain unchanged; no external image URLs are used by the organized mappings.",
+  "downloadStatus": {
+    "destinationDirectory": "assets/img/destinations/",
+    "tourDirectory": "assets/img/tours/",
+    "completed": ["thailand-gallery-01.jpg", "nepal-himalayas-gallery-01.jpg", "paris-getaway-cover.jpg", "paris-getaway-gallery-01.jpg", "tokyo-cultural-gallery-01.jpg", "iceland-northern-lights-gallery-01.jpg", "morocco-tour-gallery-01.jpg", "peru-machu-picchu-gallery-01.jpg", "vietnam-discovery-gallery-01.jpg", "australia-highlights-gallery-01.jpg", "gallery-bali-temple.jpg", "gallery-paris-seine.jpg"],
+    "failed": []
+  },
+  "knownTemplateEntities": {
+    "destinations": [
+      "Maldives",
+      "Rome, Italy",
+      "Swiss Alps",
+      "Costa Rica",
+      "Dubai, UAE",
+      "Amalfi Coast, Italy",
+      "Thailand",
+      "Nepal Himalayas",
+      "Egypt",
+      "Singapore"
+    ],
+    "tours": [
+      "Bali Adventure Escape",
+      "Romantic Paris Getaway",
+      "Tokyo Cultural Experience",
+      "Norwegian Fjords Cruise",
+      "Ancient Egypt Explorer",
+      "Costa Rica Eco Adventure",
+      "Greek Islands Discovery",
+      "Patagonia Wilderness Trek",
+      "Swiss Alps Adventure",
+      "Iceland Northern Lights",
+      "Magical Morocco Tour",
+      "Peru Machu Picchu Trek",
+      "Vietnam Discovery",
+      "Australia Highlights"
+    ],
+    "note": "These names come from legacy HTML templates. Runtime tourify_tours and tourify_destinations records require browser localStorage access and were not available for inspection."
+  },
+  "keywordMappings": {
+    "paris, france, eiffel": "assets/img/tours/paris-getaway-cover.jpg",
+    "bali, indonesia": "assets/img/tours/bali-adventure-cover.jpg",
+    "tokyo, japan": "assets/img/tours/tokyo-cultural-cover.jpg",
+    "rome, italy, venice, heritage": "assets/img/destinations/rome-cover.jpg",
+    "santorini, greece, coast": "assets/img/gallery/gallery-santorini-sunset.jpg",
+    "swiss alps": "assets/img/destinations/swiss-alps-cover.jpg",
+    "mountain, trek, nepal": "assets/img/destinations/nepal-himalayas-cover.jpg",
+    "norway, fjords": "assets/img/tours/norwegian-fjords-cover.jpg",
+    "dubai, uae, desert": "assets/img/destinations/dubai-cover.jpg",
+    "maldives, beach": "assets/img/destinations/maldives-cover.jpg",
+    "egypt, cairo, pyramid": "assets/img/destinations/egypt-cover.jpg",
+    "costa rica": "assets/img/destinations/costa-rica-cover.jpg",
+    "iceland": "assets/img/tours/iceland-northern-lights-cover.jpg",
+    "morocco": "assets/img/tours/morocco-tour-cover.jpg",
+    "peru, machu picchu": "assets/img/tours/peru-machu-picchu-cover.jpg",
+    "australia, sydney": "assets/img/tours/australia-highlights-cover.jpg",
+    "patagonia": "assets/img/tours/patagonia-trek-cover.jpg",
+    "vietnam": "assets/img/tours/vietnam-discovery-cover.jpg",
+    "thailand": "assets/img/destinations/thailand-cover.jpg",
+    "singapore": "assets/img/destinations/singapore-cover.jpg"
+  },
+  "fallback": {
+    "tour": "assets/img/hero/home-hero-travel.jpg",
+    "destination": "assets/img/destinations/maldives-cover.jpg"
+  },
+  "incomingAudit": {
+    "fileCount": 57,
+    "validFiles": 57,
+    "invalidFiles": [],
+    "inventoryFile": "IMAGE_INCOMING_INVENTORY.md",
+    "sourceNote": "Copied from IMAGE_INCOMING. No source URLs or license notes were present in the project, so none are claimed here.",
+    "runtimeDataNote": "Runtime IDs in tourify_destinations and tourify_tours remain data-owned. Mappings are resolver keyword mappings and do not invent or overwrite IDs.",
+    "unmappedIncoming": ["pexels-alexis-caso-1698085.jpg", "pexels-asad-photo-maldives-1483053.jpg", "pexels-hayri-11596589.jpg", "pexels-jason-boyd-3209045.jpg", "pexels-jean-paul-wettstein-1483037.jpg", "pexels-junnoet-235985.jpg", "pexels-latuna-313776.jpg", "pexels-rodrigo-arteaga-14653132.jpg", "pexels-slimmars-546048.jpg", "pexels-ufoops-2569789.jpg", "pexels-valentin-antonucci-691637.jpg"]
+  },
+  "copiedMappings": {
+    "destinations": {
+      "Maldives": ["assets/img/destinations/maldives-cover.jpg", "assets/img/destinations/maldives-gallery-01.jpg"],
+      "Rome, Italy": ["assets/img/destinations/rome-cover.jpg", "assets/img/destinations/rome-gallery-01.jpg"],
+      "Swiss Alps": ["assets/img/destinations/swiss-alps-cover.jpg", "assets/img/destinations/swiss-alps-gallery-01.jpg"],
+      "Costa Rica": ["assets/img/destinations/costa-rica-cover.jpg", "assets/img/destinations/costa-rica-gallery-01.jpg"],
+      "Dubai, UAE": ["assets/img/destinations/dubai-cover.jpg", "assets/img/destinations/dubai-gallery-01.jpg"],
+      "Amalfi Coast, Italy": ["assets/img/destinations/amalfi-coast-cover.jpg", "assets/img/destinations/amalfi-coast-gallery-01.jpg"],
+      "Thailand": ["assets/img/destinations/thailand-cover.jpg", "assets/img/destinations/thailand-gallery-01.jpg"],
+      "Nepal Himalayas": ["assets/img/destinations/nepal-himalayas-cover.jpg", "assets/img/destinations/nepal-himalayas-gallery-01.jpg"],
+      "Egypt": ["assets/img/destinations/egypt-cover.jpg", "assets/img/destinations/egypt-gallery-01.jpg"],
+      "Singapore": ["assets/img/destinations/singapore-cover.jpg", "assets/img/destinations/singapore-gallery-01.jpg"]
+    },
+    "tours": {
+      "Bali Adventure Escape": ["assets/img/tours/bali-adventure-cover.jpg", "assets/img/tours/bali-adventure-gallery-01.jpg"],
+      "Romantic Paris Getaway": ["assets/img/tours/paris-getaway-cover.jpg", "assets/img/tours/paris-getaway-gallery-01.jpg"],
+      "Tokyo Cultural Experience": ["assets/img/tours/tokyo-cultural-cover.jpg", "assets/img/tours/tokyo-cultural-gallery-01.jpg"],
+      "Norwegian Fjords Cruise": ["assets/img/tours/norwegian-fjords-cover.jpg", "assets/img/tours/norwegian-fjords-gallery-01.jpg"],
+      "Patagonia Wilderness Trek": ["assets/img/tours/patagonia-trek-cover.jpg", "assets/img/tours/patagonia-trek-gallery-01.jpg"],
+      "Iceland Northern Lights": ["assets/img/tours/iceland-northern-lights-cover.jpg", "assets/img/tours/iceland-northern-lights-gallery-01.jpg"],
+      "Magical Morocco Tour": ["assets/img/tours/morocco-tour-cover.jpg", "assets/img/tours/morocco-tour-gallery-01.jpg"],
+      "Peru Machu Picchu Trek": ["assets/img/tours/peru-machu-picchu-cover.jpg", "assets/img/tours/peru-machu-picchu-gallery-01.jpg"],
+      "Vietnam Discovery": ["assets/img/tours/vietnam-discovery-cover.jpg", "assets/img/tours/vietnam-discovery-gallery-01.jpg"],
+      "Australia Highlights": ["assets/img/tours/australia-highlights-cover.jpg", "assets/img/tours/australia-highlights-gallery-01.jpg"]
+    },
+    "homeHero": "assets/img/hero/home-hero-travel.jpg",
+    "gallery": {
+      "Tokyo": "assets/img/gallery/gallery-tokyo-night.jpg",
+      "Swiss Alps": "assets/img/gallery/gallery-swiss-alps.jpg",
+      "Egypt": "assets/img/gallery/gallery-egypt-pyramids.jpg",
+      "Costa Rica": "assets/img/gallery/gallery-costa-rica-rainforest.jpg",
+      "Santorini": "assets/img/gallery/gallery-santorini-sunset.jpg",
+      "Australia": "assets/img/gallery/gallery-australia-coast.jpg",
+      "Bali": "assets/img/gallery/gallery-bali-temple.jpg",
+      "Paris": "assets/img/gallery/gallery-paris-seine.jpg"
+    }
+  },
+  "missingOrUncertain": []
+}

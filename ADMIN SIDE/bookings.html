@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Manage Bookings — Tourify Admin</title>
+
+  <!-- Google Fonts matching Tourify Site -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../CLIENT SIDE/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../CLIENT SIDE/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Admin Custom CSS -->
+  <link href="assets/css/admin.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-logo">
+          <i class="bi bi-compass-fill" style="color: var(--accent-color); font-size: 1.5rem;"></i>
+          <span class="sitename">Tourify</span>
+        </a>
+        <span class="brand-badge">Admin</span>
+      </div>
+
+      <div class="sidebar-content">
+        <div class="nav-section-title">Core Management</div>
+        <ul class="admin-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i class="bi bi-speedometer2"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="tours.html" class="nav-link">
+              <i class="bi bi-map"></i>
+              <span>Manage Tours</span>
+            </a>
+          </li>
+          <li>
+            <a href="destinations.html" class="nav-link">
+              <i class="bi bi-geo-alt"></i>
+              <span>Destinations</span>
+            </a>
+          </li>
+          <li>
+            <a href="bookings.html" class="nav-link active">
+              <i class="bi bi-ticket-perforated"></i>
+              <span>Bookings</span>
+              <span id="sidebarBookingBadge" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="users.html" class="nav-link">
+              <i class="bi bi-people"></i>
+              <span>Manage Users</span>
+            </a>
+          </li>
+          <li>
+            <a href="messages.html" class="nav-link">
+              <i class="bi bi-chat-left-dots"></i>
+              <span>Messages</span>
+              <span id="sidebarMessageBadge" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title mt-3">Shortcuts & Tools</div>
+        <ul class="admin-nav">
+          <li>
+            <a href="#" class="nav-link btn-reset-demo-data">
+              <i class="bi bi-arrow-counterclockwise text-warning"></i>
+              <span>Reset Demo Data</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link btn-admin-logout text-danger">
+              <i class="bi bi-box-arrow-right text-danger"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../CLIENT SIDE/booking.html" target="_blank" class="live-site-btn">
+          <i class="bi bi-box-arrow-up-right"></i>
+          <span>View Public Booking Form</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="admin-main">
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="sidebar-toggle-btn d-lg-none" aria-label="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="page-breadcrumb">
+            <h1 class="page-title">Manage Bookings</h1>
+            <p class="breadcrumb-sub">Customer reservations, schedules, and payment statuses</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="dropdown">
+            <div class="admin-profile-pill" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="admin-avatar" id="topbarAdminAvatar">AD</div>
+              <div class="admin-info-text d-none d-sm-block">
+                <span class="admin-name" id="topbarAdminName">Administrator</span>
+                <span class="admin-role" id="topbarAdminRole">Super Admin</span>
+              </div>
+              <i class="bi bi-chevron-down text-muted small ms-1"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+              <li><a class="dropdown-item py-2" href="../CLIENT SIDE/index.html" target="_blank"><i class="bi bi-globe me-2 text-primary"></i> Live Client Site</a></li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item py-2 text-danger btn-admin-logout" href="#"><i class="bi bi-box-arrow-right me-2"></i> Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <!-- Admin Body Content -->
+      <main class="admin-body">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h5 class="admin-card-title">
+              <i class="bi bi-ticket-perforated-fill text-warning"></i> Customer Bookings (<span id="bookingsCountHeader">0</span>)
+            </h5>
+            <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2 shadow-sm" id="btnOpenAddBookingModal">
+              <i class="bi bi-plus-lg"></i> Create Manual Booking
+            </button>
+          </div>
+
+          <div class="admin-card-body">
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+              <div class="filter-search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="bookingSearchInput" class="form-control" placeholder="Search by booking code, customer, tour or email...">
+              </div>
+
+              <div class="d-flex align-items-center gap-2">
+                <select id="bookingStatusFilter" class="form-select form-select-sm" style="width: auto; min-width: 150px;">
+                  <option value="">All Statuses</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Ref Code</th>
+                    <th>Customer Name</th>
+                    <th>Tour Package</th>
+                    <th>Travel Date</th>
+                    <th>Guests</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="bookingsTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="bookingsEmptyState" class="empty-state d-none">
+              <i class="bi bi-ticket-perforated"></i>
+              <h5>No Bookings Found</h5>
+              <p>No reservations match your search or filter. You can add a reservation manually.</p>
+              <button class="btn btn-outline-primary btn-sm" id="btnEmptyAddBooking">Add Booking</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / Edit Booking Modal -->
+  <div class="modal fade" id="bookingFormModal" tabindex="-1" aria-labelledby="bookingModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <form id="bookingForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="bookingModalTitle">New Booking Reservation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body p-4">
+            <input type="hidden" id="bookingId">
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="bookingCustomerName" class="form-label fw-semibold small">Lead Traveler Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="bookingCustomerName" placeholder="e.g. John Smith" required>
+                <div class="invalid-feedback">Please enter the traveler's full name.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="bookingEmail" class="form-label fw-semibold small">Email Address <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="bookingEmail" placeholder="john.smith@example.com" required>
+                <div class="invalid-feedback">Please provide a valid email.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="bookingPhone" class="form-label fw-semibold small">Phone Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="bookingPhone" placeholder="+1 (555) 012-3456" required>
+                <div class="invalid-feedback">Please provide a contact phone number.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="bookingTourSelect" class="form-label fw-semibold small">Tour Package <span class="text-danger">*</span></label>
+                <select class="form-select" id="bookingTourSelect" required>
+                  <!-- Populated from tours in store -->
+                </select>
+                <div class="invalid-feedback">Please select a tour package.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="bookingTravelDate" class="form-label fw-semibold small">Travel Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="bookingTravelDate" required>
+                <div class="invalid-feedback">Please pick a travel date.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="bookingTravelers" class="form-label fw-semibold small">Number of Guests</label>
+                <input type="number" class="form-control" id="bookingTravelers" min="1" max="50" value="2" required>
+              </div>
+
+              <div class="col-md-4">
+                <label for="bookingTotalPrice" class="form-label fw-semibold small">Total Price (₹ INR) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="bookingTotalPrice" min="0" placeholder="1500" required>
+                <div class="invalid-feedback">Please enter total price.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="bookingStatus" class="form-label fw-semibold small">Booking Status</label>
+                <select class="form-select" id="bookingStatus">
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label for="bookingSpecialRequests" class="form-label fw-semibold small">Special Requests & Dietary Requirements</label>
+                <textarea class="form-control" id="bookingSpecialRequests" rows="3" placeholder="Airport transfer, hotel room preferences, dietary notes..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="btnSaveBooking">Save Booking</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Status Change Modal -->
+  <div class="modal fade" id="quickStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header py-2">
+          <h6 class="modal-title fw-bold">Update Status</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-3">
+          <input type="hidden" id="quickStatusBookingId">
+          <label class="form-label small fw-semibold">Select New Status:</label>
+          <select id="quickStatusSelect" class="form-select mb-3">
+            <option value="Confirmed">Confirmed</option>
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <button type="button" class="btn btn-primary btn-sm w-100" id="btnSaveQuickStatus">Apply Status</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../CLIENT SIDE/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/admin.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalEl = document.getElementById('bookingFormModal');
+      const bookingBsModal = new bootstrap.Modal(modalEl);
+      const quickStatusModalEl = document.getElementById('quickStatusModal');
+      const quickStatusBsModal = new bootstrap.Modal(quickStatusModalEl);
+
+      const bookingForm = document.getElementById('bookingForm');
+      const tbody = document.getElementById('bookingsTableBody');
+      const emptyState = document.getElementById('bookingsEmptyState');
+      const countHeader = document.getElementById('bookingsCountHeader');
+      const searchInput = document.getElementById('bookingSearchInput');
+      const statusFilter = document.getElementById('bookingStatusFilter');
+      const tourSelect = document.getElementById('bookingTourSelect');
+
+      // Populate tour packages dropdown
+      function populateTourOptions(selectedTitle = '') {
+        const tours = window.Store.getTours();
+        tourSelect.innerHTML = tours.map(t =>
+          `<option value="${t.title}" ${t.title === selectedTitle ? 'selected' : ''}>${t.title} (${window.formatCurrency(t.price)})</option>`
+        ).join('');
+      }
+
+      // Auto calculate price based on selected tour & travelers when adding new
+      tourSelect.addEventListener('change', function () {
+        if (!document.getElementById('bookingId').value) {
+          const selectedTitle = this.value;
+          const tour = window.Store.getTours().find(t => t.title === selectedTitle);
+          if (tour) {
+            const num = Number(document.getElementById('bookingTravelers').value) || 1;
+            document.getElementById('bookingTotalPrice').value = (tour.price || 0) * num;
+          }
+        }
+      });
+
+      document.getElementById('bookingTravelers').addEventListener('input', function () {
+        if (!document.getElementById('bookingId').value) {
+          const selectedTitle = tourSelect.value;
+          const tour = window.Store.getTours().find(t => t.title === selectedTitle);
+          if (tour) {
+            const num = Number(this.value) || 1;
+            document.getElementById('bookingTotalPrice').value = (tour.price || 0) * num;
+          }
+        }
+      });
+
+      // Render Bookings Table
+      function renderBookings() {
+        const query = searchInput.value.trim().toLowerCase();
+        const selectedStatus = statusFilter.value;
+
+        let list = window.Store.getBookings();
+
+        if (query) {
+          list = list.filter(b =>
+            (b.bookingCode && b.bookingCode.toLowerCase().includes(query)) ||
+            (b.customerName && b.customerName.toLowerCase().includes(query)) ||
+            (b.email && b.email.toLowerCase().includes(query)) ||
+            (b.tourTitle && b.tourTitle.toLowerCase().includes(query))
+          );
+        }
+
+        if (selectedStatus) {
+          list = list.filter(b => b.status === selectedStatus);
+        }
+
+        countHeader.textContent = list.length;
+
+        if (list.length === 0) {
+          tbody.innerHTML = '';
+          emptyState.classList.remove('d-none');
+          return;
+        }
+
+        emptyState.classList.add('d-none');
+        tbody.innerHTML = list.map(b => {
+          const statusClass = (b.status || 'Pending').toLowerCase();
+          return `
+            <tr>
+              <td>
+                <span class="fw-semibold text-primary font-monospace">${b.bookingCode || b.id}</span>
+                <div class="small text-muted" style="font-size: 0.72rem;">Booked: ${b.createdAt || '-'}</div>
+              </td>
+              <td>
+                <div class="fw-semibold text-dark">${b.customerName}</div>
+                <div class="small text-muted">${b.email} • ${b.phone || ''}</div>
+              </td>
+              <td>
+                <div class="fw-medium text-dark text-truncate" style="max-width: 200px;">${b.tourTitle}</div>
+                ${b.specialRequests ? `<div class="small text-muted text-truncate" style="max-width: 200px;"><i class="bi bi-chat-left-text me-1"></i>${b.specialRequests}</div>` : ''}
+              </td>
+              <td>${window.formatDate(b.travelDate)}</td>
+              <td><span class="badge bg-light text-dark border">${b.travelers || 1} Guests</span></td>
+              <td><strong class="text-dark">${window.formatCurrency(b.totalPrice)}</strong></td>
+              <td>
+                <button type="button" class="btn p-0 border-0 btn-quick-status" data-id="${b.id}" data-status="${b.status}" title="Click to quickly change status">
+                  <span class="status-badge ${statusClass}">${b.status}</span>
+                </button>
+              </td>
+              <td class="text-end">
+                <div class="action-btn-group">
+                  <button type="button" class="btn-action btn-action-edit btn-edit-booking" data-id="${b.id}" title="Edit Booking">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button type="button" class="btn-action btn-action-delete btn-delete-booking" data-id="${b.id}" data-code="${b.bookingCode || b.id}" title="Delete Booking">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach action handlers
+        document.querySelectorAll('.btn-quick-status').forEach(b => {
+          b.addEventListener('click', function () {
+            document.getElementById('quickStatusBookingId').value = this.getAttribute('data-id');
+            document.getElementById('quickStatusSelect').value = this.getAttribute('data-status');
+            quickStatusBsModal.show();
+          });
+        });
+
+        document.querySelectorAll('.btn-edit-booking').forEach(b => {
+          b.addEventListener('click', function () {
+            openEditModal(this.getAttribute('data-id'));
+          });
+        });
+
+        document.querySelectorAll('.btn-delete-booking').forEach(b => {
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const code = this.getAttribute('data-code');
+            window.confirmAction(
+              'Delete Booking Reservation?',
+              `Are you sure you want to permanently delete booking [${code}]?`,
+              function () {
+                window.Store.deleteBooking(id);
+                window.showToast('Booking deleted successfully!', 'danger');
+                renderBookings();
+                window.updateSidebarBadges();
+              }
+            );
+          });
+        });
+      }
+
+      // Quick Status Save
+      document.getElementById('btnSaveQuickStatus').addEventListener('click', function () {
+        const id = document.getElementById('quickStatusBookingId').value;
+        const newStatus = document.getElementById('quickStatusSelect').value;
+        window.Store.updateBookingStatus(id, newStatus);
+        quickStatusBsModal.hide();
+        window.showToast(`Booking status updated to ${newStatus}!`, 'info');
+        renderBookings();
+        window.updateSidebarBadges();
+      });
+
+      // Open Add Booking Modal
+      function openAddModal() {
+        bookingForm.reset();
+        bookingForm.classList.remove('was-validated');
+        document.getElementById('bookingId').value = '';
+        document.getElementById('bookingModalTitle').textContent = 'Create Manual Booking';
+        populateTourOptions();
+
+        // Default tomorrow's date
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 7);
+        document.getElementById('bookingTravelDate').value = tomorrow.toISOString().split('T')[0];
+        document.getElementById('bookingTravelers').value = 2;
+        document.getElementById('bookingStatus').value = 'Confirmed';
+
+        const firstTour = window.Store.getTours()[0];
+        if (firstTour) {
+          document.getElementById('bookingTotalPrice').value = (firstTour.price || 1000) * 2;
+        }
+
+        bookingBsModal.show();
+      }
+
+      // Open Edit Booking Modal
+      function openEditModal(id) {
+        const b = window.Store.getBooking(id);
+        if (!b) return;
+
+        bookingForm.reset();
+        bookingForm.classList.remove('was-validated');
+        document.getElementById('bookingId').value = b.id;
+        document.getElementById('bookingModalTitle').textContent = 'Edit Booking: ' + (b.bookingCode || b.id);
+        document.getElementById('bookingCustomerName').value = b.customerName || '';
+        document.getElementById('bookingEmail').value = b.email || '';
+        document.getElementById('bookingPhone').value = b.phone || '';
+
+        populateTourOptions(b.tourTitle);
+        document.getElementById('bookingTourSelect').value = b.tourTitle || '';
+
+        document.getElementById('bookingTravelDate').value = b.travelDate || '';
+        document.getElementById('bookingTravelers').value = b.travelers || 1;
+        document.getElementById('bookingTotalPrice').value = b.totalPrice || 0;
+        document.getElementById('bookingStatus').value = b.status || 'Confirmed';
+        document.getElementById('bookingSpecialRequests').value = b.specialRequests || '';
+
+        bookingBsModal.show();
+      }
+
+      // Save Booking Form
+      bookingForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!this.checkValidity()) {
+          e.stopPropagation();
+          this.classList.add('was-validated');
+          return;
+        }
+
+        const id = document.getElementById('bookingId').value;
+        const bookingData = {
+          id: id || undefined,
+          customerName: document.getElementById('bookingCustomerName').value.trim(),
+          email: document.getElementById('bookingEmail').value.trim(),
+          phone: document.getElementById('bookingPhone').value.trim(),
+          tourTitle: document.getElementById('bookingTourSelect').value,
+          travelDate: document.getElementById('bookingTravelDate').value,
+          travelers: Number(document.getElementById('bookingTravelers').value) || 1,
+          totalPrice: Number(document.getElementById('bookingTotalPrice').value) || 0,
+          status: document.getElementById('bookingStatus').value,
+          specialRequests: document.getElementById('bookingSpecialRequests').value.trim()
+        };
+
+        window.Store.saveBooking(bookingData);
+        bookingBsModal.hide();
+        window.showToast(id ? 'Booking reservation updated!' : 'New booking successfully created!', 'success');
+        renderBookings();
+        window.updateSidebarBadges();
+      });
+
+      // Listeners
+      document.getElementById('btnOpenAddBookingModal').addEventListener('click', openAddModal);
+      document.getElementById('btnEmptyAddBooking').addEventListener('click', openAddModal);
+      searchInput.addEventListener('input', renderBookings);
+      statusFilter.addEventListener('change', renderBookings);
+
+      // Initial render
+      renderBookings();
+    });
+  </script>
+</body>
+</html>

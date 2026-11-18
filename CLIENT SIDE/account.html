@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>My Account — Tourify</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body class="booking-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0"><i class="bi bi-compass-fill me-2"></i><h1 class="sitename">Tourify</h1></a>
+      <nav id="navmenu" class="navmenu"><ul><li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="tours.html">Tours</a></li><li><a href="account.html" class="active">My Account</a></li><li><a href="#" class="btn-client-logout">Log Out</a></li></ul></nav>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </div>
+  </header>
+  <main class="main pt-5">
+    <section class="section mt-5">
+      <div class="container">
+        <div id="accountAlert" class="alert d-none"></div>
+        <div class="row g-4">
+          <div class="col-lg-4"><div class="card border-0 shadow-sm h-100"><div class="card-body p-4"><p class="text-uppercase small text-primary fw-semibold mb-2">My Account</p><h1 id="accountName" class="h3 mb-3">Account</h1><p id="accountEmail" class="text-muted mb-1"></p><p id="accountJoined" class="text-muted small"></p><button class="btn btn-outline-danger btn-sm btn-client-logout">Log Out</button></div></div></div>
+          <div class="col-lg-8"><div class="card border-0 shadow-sm"><div class="card-body p-4"><h2 class="h4 mb-4">My Bookings</h2><div id="accountBookings"></div></div></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/account.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

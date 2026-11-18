@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOURIFY — Sign In</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #3b82f6;
+      --blue-dark: #2563eb;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --text-soft: #94a3b8;
+      --border: #e2e8f0;
+      --input-bg: #f8fafc;
+      --white: #ffffff;
+      --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.10);
+      --btn-shadow: 0 4px 15px rgba(59, 130, 246, 0.40);
+      --ease: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page-wrapper {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=85');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, rgba(10, 18, 40, 0.80) 0%, rgba(10, 18, 40, 0.65) 45%, rgba(10, 18, 40, 0.50) 100%);
+      z-index: 0;
+    }
+
+    .page-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.30) 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 2rem 0;
+    }
+
+    /* LEFT */
+    .left-section {
+      padding: 2rem 3rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: var(--white);
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 3rem;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s ease forwards;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.20);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(6px);
+      color: #fff;
+    }
+
+    .logo-word {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .hero-heading {
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.25s ease forwards;
+    }
+
+    .hero-rule {
+      width: 52px;
+      height: 3px;
+      background: linear-gradient(90deg, #f5c842, #e8a728);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.38s ease forwards;
+    }
+
+    .hero-tagline {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.90);
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.48s ease forwards;
+    }
+
+    .hero-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.75;
+      max-width: 400px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.58s ease forwards;
+    }
+
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.72s ease forwards;
+    }
+
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .trust-num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .trust-label {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .trust-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.20);
+    }
+
+    /* RIGHT CARD */
+    .right-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem 2rem 1rem;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 20px;
+      padding: 2.8rem 2.6rem;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardIn 0.85s 0.30s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .card-label {
+      font-size: 0.70rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .field-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-soft);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .field-input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-dark);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      padding: 0.72rem 1rem 0.72rem 2.6rem;
+      outline: none;
+      transition: border-color var(--ease), box-shadow var(--ease);
+    }
+
+    .field-input:focus {
+      background: var(--white);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.15);
+    }
+
+    .field-input::placeholder {
+      color: var(--text-soft);
+      font-weight: 300;
+    }
+
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--blue);
+      text-decoration: none;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .forgot-link:hover {
+      color: var(--blue-dark);
+      text-decoration: underline;
+    }
+
+    .btn-signin {
+      width: 100%;
+      background: var(--blue);
+      border: none;
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.82rem 1rem;
+      cursor: pointer;
+      box-shadow: var(--btn-shadow);
+      transition: background var(--ease), transform var(--ease);
+    }
+
+    .btn-signin:hover {
+      background: var(--blue-dark);
+      transform: translateY(-2px);
+    }
+
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 1.3rem 0;
+    }
+
+    .or-divider::before,
+    .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .or-divider span {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .card-footer-text {
+      text-align: center;
+      margin-top: 1.4rem;
+      font-size: 0.80rem;
+      color: var(--text-soft);
+    }
+
+    .card-footer-text a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .card-footer-text a:hover {
+      color: var(--blue-dark);
+      text-decoration: underline;
+    }
+
+    /* Client Feedback Messages */
+    .client-messages {
+      margin-bottom: 1rem;
+    }
+
+    .msg-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.80rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .msg-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.80rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-hint-box {
+      background: #eff6ff;
+      border: 1px dashed #bfdbfe;
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.75rem;
+      color: #1e40af;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      .main-container {
+        flex-direction: column;
+        padding: 2.5rem 1rem;
+      }
+
+      .left-section {
+        padding: 1.5rem 1rem 0;
+        text-align: center;
+        align-items: center;
+      }
+
+      .trust-row {
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+
+      .right-section {
+        padding: 1.5rem 1rem;
+        width: 100%;
+      }
+
+      .page-wrapper {
+        background-attachment: scroll;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div class="main-container">
+      <div class="container-xl">
+        <div class="row align-items-center gy-4">
+
+          <!-- LEFT -->
+          <div class="col-lg-6 col-md-12">
+            <div class="left-section">
+              <a href="index.html" class="brand-logo">
+                <div class="logo-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                    <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                  </svg>
+                </div>
+                <span class="logo-word">TOURIFY</span>
+              </a>
+              <h1 class="hero-heading">Explore<br />Horizons</h1>
+              <div class="hero-rule"></div>
+              <p class="hero-tagline">Where Your Dream Destinations Become Reality</p>
+              <p class="hero-desc">Embark on a journey where every destination tells a story and every moment becomes a
+                memory worth treasuring forever.</p>
+              <div class="trust-row">
+                <div class="trust-item">
+                  <span class="trust-num">250+</span>
+                  <span class="trust-label">Destinations</span>
+                </div>
+                <div class="trust-divider"></div>
+                <div class="trust-item">
+                  <span class="trust-num">98k</span>
+                  <span class="trust-label">Travelers</span>
+                </div>
+                <div class="trust-divider"></div>
+                <div class="trust-item">
+                  <span class="trust-num">4.9★</span>
+                  <span class="trust-label">Rating</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="col-lg-6 col-md-12">
+            <div class="right-section">
+              <div class="login-card">
+                <p class="card-label">Member Access</p>
+                <h2 class="card-title">Welcome Back 👋</h2>
+                <p class="card-subtitle">Sign in to continue your adventure.</p>
+
+                <!-- Feedback Messages Container -->
+                <div id="loginAlertContainer" class="client-messages" style="display:none;"></div>
+
+                <!-- Login Form -->
+                <form id="loginForm" novalidate>
+                  <div class="mb-3">
+                    <label class="field-label" for="loginEmail">Email Address</label>
+                    <div class="input-wrap">
+                      <span class="field-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                          viewBox="0 0 16 16">
+                          <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z" />
+                        </svg>
+                      </span>
+                      <input type="email" id="loginEmail" name="email" class="field-input" placeholder="Enter your email" required
+                        autocomplete="off" autofocus />
+                    </div>
+                  </div>
+
+                  <div class="mb-2">
+                    <label class="field-label" for="loginPassword">Password</label>
+                    <div class="input-wrap">
+                      <span class="field-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          viewBox="0 0 16 16">
+                          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2z" />
+                          <path d="M3 9h10a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z" />
+                        </svg>
+                      </span>
+                      <input type="password" id="loginPassword" name="password" class="field-input" placeholder="Enter your password"
+                        required autocomplete="off" />
+                    </div>
+                  </div>
+
+                  <button type="submit" id="btnLoginSubmit" class="btn-signin">Sign In</button>
+                </form>
+
+                <p class="card-footer-text">
+                  Are you new? <a href="register.html">Create an Account</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Auth JS -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/auth.js"></script>
+</body>
+
+</html>

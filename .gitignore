@@ -1,0 +1,26 @@
+
+# Dependencies and generated files
+node_modules/
+vendor/
+dist/
+build/
+.cache/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+*.tmp

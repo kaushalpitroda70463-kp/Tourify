@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Manage Tours — Tourify Admin</title>
+
+  <!-- Google Fonts matching Tourify Site -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../CLIENT SIDE/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../CLIENT SIDE/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Admin Custom CSS -->
+  <link href="assets/css/admin.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-logo">
+          <i class="bi bi-compass-fill" style="color: var(--accent-color); font-size: 1.5rem;"></i>
+          <span class="sitename">Tourify</span>
+        </a>
+        <span class="brand-badge">Admin</span>
+      </div>
+
+      <div class="sidebar-content">
+        <div class="nav-section-title">Core Management</div>
+        <ul class="admin-nav">
+          <li>
+            <a href="index.html" class="nav-link">
+              <i class="bi bi-speedometer2"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="tours.html" class="nav-link active">
+              <i class="bi bi-map"></i>
+              <span>Manage Tours</span>
+            </a>
+          </li>
+          <li>
+            <a href="destinations.html" class="nav-link">
+              <i class="bi bi-geo-alt"></i>
+              <span>Destinations</span>
+            </a>
+          </li>
+          <li>
+            <a href="bookings.html" class="nav-link">
+              <i class="bi bi-ticket-perforated"></i>
+              <span>Bookings</span>
+              <span id="sidebarBookingBadge" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="users.html" class="nav-link">
+              <i class="bi bi-people"></i>
+              <span>Manage Users</span>
+            </a>
+          </li>
+          <li>
+            <a href="messages.html" class="nav-link">
+              <i class="bi bi-chat-left-dots"></i>
+              <span>Messages</span>
+              <span id="sidebarMessageBadge" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title mt-3">Shortcuts & Tools</div>
+        <ul class="admin-nav">
+          <li>
+            <a href="#" class="nav-link btn-reset-demo-data">
+              <i class="bi bi-arrow-counterclockwise text-warning"></i>
+              <span>Reset Demo Data</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link btn-admin-logout text-danger">
+              <i class="bi bi-box-arrow-right text-danger"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../CLIENT SIDE/tours.html" target="_blank" class="live-site-btn">
+          <i class="bi bi-box-arrow-up-right"></i>
+          <span>View Public Tours</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="admin-main">
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="sidebar-toggle-btn d-lg-none" aria-label="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="page-breadcrumb">
+            <h1 class="page-title">Manage Tours</h1>
+            <p class="breadcrumb-sub">Create, edit, search and delete tourism packages</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="dropdown">
+            <div class="admin-profile-pill" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="admin-avatar" id="topbarAdminAvatar">AD</div>
+              <div class="admin-info-text d-none d-sm-block">
+                <span class="admin-name" id="topbarAdminName">Administrator</span>
+                <span class="admin-role" id="topbarAdminRole">Super Admin</span>
+              </div>
+              <i class="bi bi-chevron-down text-muted small ms-1"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+              <li><a class="dropdown-item py-2" href="../CLIENT SIDE/index.html" target="_blank"><i class="bi bi-globe me-2 text-primary"></i> Live Client Site</a></li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item py-2 text-danger btn-admin-logout" href="#"><i class="bi bi-box-arrow-right me-2"></i> Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <!-- Admin Body Content -->
+      <main class="admin-body">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h5 class="admin-card-title">
+              <i class="bi bi-compass text-primary"></i> All Travel Tours (<span id="toursCountHeader">0</span>)
+            </h5>
+            <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2 shadow-sm" id="btnOpenAddTourModal">
+              <i class="bi bi-plus-lg"></i> Add New Tour
+            </button>
+          </div>
+
+          <div class="admin-card-body">
+            <!-- Filter & Search Bar -->
+            <div class="filter-bar">
+              <div class="filter-search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="tourSearchInput" class="form-control" placeholder="Search by tour title or destination...">
+              </div>
+
+              <div class="d-flex align-items-center gap-2 flex-wrap">
+                <select id="tourCategoryFilter" class="form-select form-select-sm" style="width: auto; min-width: 150px;">
+                  <option value="">All Categories</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Beach & Island">Beach & Island</option>
+                  <option value="Historical">Historical</option>
+                  <option value="Luxury">Luxury</option>
+                </select>
+
+                <select id="tourStatusFilter" class="form-select form-select-sm" style="width: auto; min-width: 130px;">
+                  <option value="">All Statuses</option>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Tours Table -->
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Tour Title</th>
+                    <th>Destination</th>
+                    <th>Category</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="toursTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="toursEmptyState" class="empty-state d-none">
+              <i class="bi bi-map"></i>
+              <h5>No Tours Found</h5>
+              <p>Try refining your search terms or add a brand new travel package.</p>
+              <button class="btn btn-outline-primary btn-sm" id="btnEmptyAddTour">Add New Tour</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / Edit Tour Modal -->
+  <div class="modal fade" id="tourFormModal" tabindex="-1" aria-labelledby="tourModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <form id="tourForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="tourModalTitle">Add New Tour</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body p-4">
+            <input type="hidden" id="tourId">
+
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label for="tourTitle" class="form-label fw-semibold small">Tour Title <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tourTitle" placeholder="e.g. Romantic Paris & Seine Cruise" required>
+                <div class="invalid-feedback">Please provide a tour title.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="tourCategory" class="form-label fw-semibold small">Category <span class="text-danger">*</span></label>
+                <select class="form-select" id="tourCategory" required>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Beach & Island">Beach & Island</option>
+                  <option value="Historical">Historical</option>
+                  <option value="Luxury">Luxury</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="tourDestination" class="form-label fw-semibold small">Destination Location <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tourDestination" placeholder="e.g. Paris, France" required>
+                <div class="invalid-feedback">Please specify the destination.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="tourDuration" class="form-label fw-semibold small">Duration <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="tourDuration" placeholder="e.g. 5 Days / 4 Nights" required>
+                <div class="invalid-feedback">Please enter the duration.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="tourPrice" class="form-label fw-semibold small">Price (₹ INR) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="tourPrice" placeholder="1250" min="1" required>
+                <div class="invalid-feedback">Please enter a valid price.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="tourMaxGroup" class="form-label fw-semibold small">Max Group Size</label>
+                <input type="number" class="form-control" id="tourMaxGroup" placeholder="15" min="1" value="12">
+              </div>
+
+              <div class="col-md-4">
+                <label for="tourStatus" class="form-label fw-semibold small">Status</label>
+                <select class="form-select" id="tourStatus">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label for="tourImage" class="form-label fw-semibold small">Image Asset / URL</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="tourImage" placeholder="../CLIENT SIDE/assets/img/hero/home-hero-travel.jpg">
+                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Select Sample</button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item select-sample-img" href="#" data-src="../CLIENT SIDE/assets/img/tours/paris-getaway-cover.jpg">Paris Getaway</a></li>
+                    <li><a class="dropdown-item select-sample-img" href="#" data-src="../CLIENT SIDE/assets/img/tours/bali-adventure-cover.jpg">Bali Adventure</a></li>
+                    <li><a class="dropdown-item select-sample-img" href="#" data-src="../CLIENT SIDE/assets/img/tours/tokyo-cultural-cover.jpg">Tokyo Culture</a></li>
+                    <li><a class="dropdown-item select-sample-img" href="#" data-src="../CLIENT SIDE/assets/img/destinations/rome-cover.jpg">Rome</a></li>
+                    <li><a class="dropdown-item select-sample-img" href="#" data-src="../CLIENT SIDE/assets/img/gallery/gallery-santorini-sunset.jpg">Santorini</a></li>
+                    <li><a class="dropdown-item select-sample-img" href="#" data-src="../CLIENT SIDE/assets/img/destinations/swiss-alps-cover.jpg">Swiss Alps</a></li>
+                  </ul>
+                </div>
+                <div class="form-text">Choose from existing travel imagery in your project or paste any relative/web URL.</div>
+              </div>
+
+              <div class="col-12">
+                <label for="tourDescription" class="form-label fw-semibold small">Tour Description</label>
+                <textarea class="form-control" id="tourDescription" rows="3" placeholder="Provide overview, highlights, itinerary details..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="tourFeatured">
+                  <label class="form-check-label small fw-semibold" for="tourFeatured">Feature this tour on client homepage</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="btnSaveTour">Save Tour Package</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../CLIENT SIDE/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/admin.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const modalEl = document.getElementById('tourFormModal');
+      const tourBsModal = new bootstrap.Modal(modalEl);
+      const tourForm = document.getElementById('tourForm');
+      const tbody = document.getElementById('toursTableBody');
+      const emptyState = document.getElementById('toursEmptyState');
+      const countHeader = document.getElementById('toursCountHeader');
+      const searchInput = document.getElementById('tourSearchInput');
+      const categoryFilter = document.getElementById('tourCategoryFilter');
+      const statusFilter = document.getElementById('tourStatusFilter');
+
+      // Sample image picker
+      document.querySelectorAll('.select-sample-img').forEach(item => {
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.getElementById('tourImage').value = this.getAttribute('data-src');
+        });
+      });
+
+      // Render table
+      function renderTours() {
+        const query = searchInput.value.trim().toLowerCase();
+        const selectedCat = categoryFilter.value;
+        const selectedStatus = statusFilter.value;
+
+        let tours = window.Store.getTours();
+
+        if (query) {
+          tours = tours.filter(t =>
+            (t.title && t.title.toLowerCase().includes(query)) ||
+            (t.destination && t.destination.toLowerCase().includes(query))
+          );
+        }
+
+        if (selectedCat) {
+          tours = tours.filter(t => t.category === selectedCat);
+        }
+
+        if (selectedStatus) {
+          tours = tours.filter(t => t.status === selectedStatus);
+        }
+
+        countHeader.textContent = tours.length;
+
+        if (tours.length === 0) {
+          tbody.innerHTML = '';
+          emptyState.classList.remove('d-none');
+          return;
+        }
+
+        emptyState.classList.add('d-none');
+        tbody.innerHTML = tours.map(t => {
+          const statusClass = (t.status || 'Active').toLowerCase();
+          const imgUrl = window.resolveTourifyImage(t, 'tour');
+          return `
+            <tr>
+              <td>
+                <img src="${imgUrl}" alt="${t.title}" class="table-img-thumb" onerror="this.src='../CLIENT SIDE/assets/img/hero/home-hero-travel.jpg'">
+              </td>
+              <td>
+                <div class="fw-semibold text-dark">${t.title}</div>
+                ${t.featured ? '<span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle small me-1">Featured</span>' : ''}
+                <span class="small text-muted">${t.maxGroup || 12} max guests</span>
+              </td>
+              <td>
+                <i class="bi bi-geo-alt text-danger me-1"></i>${t.destination}
+              </td>
+              <td><span class="badge bg-light text-dark border">${t.category || 'General'}</span></td>
+              <td><i class="bi bi-clock me-1 text-muted"></i>${t.duration}</td>
+              <td><strong class="text-primary">${window.formatCurrency(t.price)}</strong></td>
+              <td><span class="status-badge ${statusClass}">${t.status || 'Active'}</span></td>
+              <td class="text-end">
+                <div class="action-btn-group">
+                  <button type="button" class="btn-action btn-action-edit btn-edit-tour" data-id="${t.id}" title="Edit Tour">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button type="button" class="btn-action btn-action-delete btn-delete-tour" data-id="${t.id}" data-title="${t.title}" title="Delete Tour">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach action handlers
+        document.querySelectorAll('.btn-edit-tour').forEach(b => {
+          b.addEventListener('click', function () {
+            openEditModal(this.getAttribute('data-id'));
+          });
+        });
+
+        document.querySelectorAll('.btn-delete-tour').forEach(b => {
+          b.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const title = this.getAttribute('data-title');
+            window.confirmAction(
+              'Delete Tour Package?',
+              `Are you sure you want to remove "${title}"? This cannot be undone.`,
+              function () {
+                window.Store.deleteTour(id);
+                window.showToast('Tour deleted successfully!', 'danger');
+                renderTours();
+                window.updateSidebarBadges();
+              }
+            );
+          });
+        });
+      }
+
+      // Open Add Tour Modal
+      function openAddModal() {
+        tourForm.reset();
+        tourForm.classList.remove('was-validated');
+        document.getElementById('tourId').value = '';
+        document.getElementById('tourModalTitle').textContent = 'Add New Tour Package';
+        document.getElementById('tourImage').value = '../CLIENT SIDE/assets/img/hero/home-hero-travel.jpg';
+        document.getElementById('tourStatus').value = 'Active';
+        tourBsModal.show();
+      }
+
+      // Open Edit Tour Modal
+      function openEditModal(id) {
+        const tour = window.Store.getTour(id);
+        if (!tour) return;
+
+        tourForm.reset();
+        tourForm.classList.remove('was-validated');
+        document.getElementById('tourId').value = tour.id;
+        document.getElementById('tourModalTitle').textContent = 'Edit Tour: ' + tour.title;
+        document.getElementById('tourTitle').value = tour.title || '';
+        document.getElementById('tourCategory').value = tour.category || 'Cultural';
+        document.getElementById('tourDestination').value = tour.destination || '';
+        document.getElementById('tourDuration').value = tour.duration || '';
+        document.getElementById('tourPrice').value = tour.price || '';
+        document.getElementById('tourMaxGroup').value = tour.maxGroup || 12;
+        document.getElementById('tourStatus').value = tour.status || 'Active';
+        document.getElementById('tourImage').value = tour.image || '';
+        document.getElementById('tourDescription').value = tour.description || '';
+        document.getElementById('tourFeatured').checked = Boolean(tour.featured);
+
+        tourBsModal.show();
+      }
+
+      // Save Tour (Create or Update)
+      tourForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!this.checkValidity()) {
+          e.stopPropagation();
+          this.classList.add('was-validated');
+          return;
+        }
+
+        const id = document.getElementById('tourId').value;
+        const tourData = {
+          id: id || undefined,
+          title: document.getElementById('tourTitle').value.trim(),
+          category: document.getElementById('tourCategory').value,
+          destination: document.getElementById('tourDestination').value.trim(),
+          duration: document.getElementById('tourDuration').value.trim(),
+          price: Number(document.getElementById('tourPrice').value) || 0,
+          maxGroup: Number(document.getElementById('tourMaxGroup').value) || 12,
+          status: document.getElementById('tourStatus').value,
+          image: document.getElementById('tourImage').value.trim() || '../CLIENT SIDE/assets/img/hero/home-hero-travel.jpg',
+          description: document.getElementById('tourDescription').value.trim(),
+          featured: document.getElementById('tourFeatured').checked
+        };
+
+        window.Store.saveTour(tourData);
+        tourBsModal.hide();
+        window.showToast(id ? 'Tour package updated successfully!' : 'New tour package created successfully!', 'success');
+        renderTours();
+        window.updateSidebarBadges();
+      });
+
+      // Event listeners
+      document.getElementById('btnOpenAddTourModal').addEventListener('click', openAddModal);
+      document.getElementById('btnEmptyAddTour').addEventListener('click', openAddModal);
+      searchInput.addEventListener('input', renderTours);
+      categoryFilter.addEventListener('change', renderTours);
+      statusFilter.addEventListener('change', renderTours);
+
+      // Check query param for immediate modal opening
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('action') === 'new') {
+        openAddModal();
+      }
+
+      // Initial render
+      renderTours();
+    });
+  </script>
+</body>
+</html>
